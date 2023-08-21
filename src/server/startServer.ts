@@ -5,7 +5,7 @@ import app from "./index.js";
 const startServer = () => {
   const port = process.env.PORT ?? 4000;
 
-  app.listen(() => {
+  app.listen(Number(port), () => {
     chalk.inverse.bgYellowBright(`Listening on http://localhost:${port}`);
   });
 };
