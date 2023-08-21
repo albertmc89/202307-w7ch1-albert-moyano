@@ -3,18 +3,18 @@ import { type Thing } from "./types.js";
 export const things: Thing[] = [
   {
     id: 1,
-    description: "Do sport",
+    description: "Play tennis",
   },
   {
     id: 2,
-    description: "Do homework",
+    description: "Skate",
   },
   {
     id: 3,
-    description: "Do the challenge",
+    description: "Drive",
   },
   {
     id: 4,
-    description: "Make dinner",
+    description: "Cook",
   },
 ];
