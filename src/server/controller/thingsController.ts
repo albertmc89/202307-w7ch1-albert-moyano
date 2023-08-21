@@ -1,15 +1,11 @@
-import { type NextFunction, type Request, type Response } from "express";
+import { type Request, type Response } from "express";
 import { things } from "../../data/data.js";
 
-export const getThings = (
-  _req: Request,
-  res: Response,
-  _next: NextFunction
-) => {
+export const getThings = (_req: Request, res: Response) => {
   res.status(200).json({ things });
 };
 
-export const deleteThingById = (req: Request, _res: Response) => {
+export const deleteThingById = (req: Request, res: Response) => {
   const { idThing } = req.params;
 
   const thingToDeletePosition = things.findIndex(
@@ -17,4 +13,6 @@ export const deleteThingById = (req: Request, _res: Response) => {
   );
 
   things.splice(thingToDeletePosition, 1);
+
+  res.status(200).json({ thingToDeletePosition });
 };
