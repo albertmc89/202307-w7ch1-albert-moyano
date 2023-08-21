@@ -1,5 +1,5 @@
 import express from "express";
-import thingsRouter from "./routers/thingsRouters";
+import thingsRouter from "./routers/thingsRouters.js";
 
 const app = express();
 
