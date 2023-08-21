@@ -3,7 +3,7 @@ import { deleteThingById, getThings } from "../controller/thingsController.js";
 
 const thingsRouter = express.Router();
 
-thingsRouter.get("/things", getThings);
+thingsRouter.get("/", getThings);
 thingsRouter.delete("/:idThing", deleteThingById);
 
 export default thingsRouter;
