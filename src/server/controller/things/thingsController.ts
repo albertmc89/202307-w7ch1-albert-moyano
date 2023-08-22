@@ -1,4 +1,4 @@
-import { type Request, type Response } from "express";
+import { type NextFunction, type Request, type Response } from "express";
 import { things } from "../../../data/data.js";
 
 export const getThings = (_req: Request, res: Response) => {
@@ -7,7 +7,6 @@ export const getThings = (_req: Request, res: Response) => {
 };
 
 export const getThingById = (req: Request, res: Response) => {
-  console.log("Request with GET method to get a single thing");
   const { idThing } = req.params;
 
   const thingById = things.find((thing) => thing.id === Number(idThing));
@@ -15,12 +14,22 @@ export const getThingById = (req: Request, res: Response) => {
   res.status(200).json(thingById);
 };
 
-export const deleteThingById = (req: Request, res: Response) => {
+export const deleteThingById = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { idThing } = req.params;
 
   const thingToDeletePosition = things.findIndex(
     (thing) => thing.id === Number(idThing)
   );
+
+  next(new Error());
+
+  if (thingToDeletePosition === -1) {
+    res.status(404).json({ message: "User not found" });
+  }
 
   things.splice(thingToDeletePosition, 1);
 
