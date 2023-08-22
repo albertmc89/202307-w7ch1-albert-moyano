@@ -1,11 +1,11 @@
-import "dotenv";
+import debugCreator from "debug";
 import app from "./index.js";
 
-const startServer = () => {
-  const port = process.env.PORT ?? 4000;
+const debug = debugCreator("things:server:start");
 
-  app.listen(Number(port), () => {
-    console.log(`Listening on http://localhost:${port}`);
+const startServer = (port: number | string) => {
+  app.listen(port, () => {
+    debug(`Listening on http://localhost:${port}`);
   });
 };
 

@@ -19,6 +19,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-implicit-coercion": "off",
     "new-cap": [
       "error",
       {
