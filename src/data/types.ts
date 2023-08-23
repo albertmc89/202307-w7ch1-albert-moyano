@@ -5,4 +5,4 @@ export interface Thing {
   description: string;
 }
 
-export type ParamIdRequest = Request<{ id: string }>;
+export type ParamIdRequest = Request<{ idThing: string }>;
