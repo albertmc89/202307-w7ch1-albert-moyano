@@ -4,8 +4,8 @@ import { things } from "../../../data/data.js";
 import Thing from "../../../data/models/Thing.js";
 import { type ParamIdRequest } from "../../../data/types.js";
 
-export const getThings = (_req: Request, res: Response) => {
-  const things = Thing.find().exec();
+export const getThings = async (_req: Request, res: Response) => {
+  const things = await Thing.find().exec();
 
   res.status(200).json({ things });
 };
@@ -38,7 +38,7 @@ export const getThingById = (
     next(customError);
   }
 
-  res.status(200).json(Thing);
+  res.status(200).json({ idThing });
 };
 
 export const deleteThingById = (

@@ -1,7 +1,7 @@
-import { Schema, model, type ObjectId } from "mongoose";
+import { Schema, model } from "mongoose";
 
 export interface ThingStructure {
-  id: ObjectId;
+  id: string;
   description: string;
 }
 

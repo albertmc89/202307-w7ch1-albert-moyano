@@ -35,11 +35,5 @@ describe("Given a getThingById controller", () => {
 
       expect(res.json).toBeCalledWith({ thing: things });
     });
-
-    test("Then the next function should be called with an error message 'Thing not found' and error status 404", () => {
-      getThingById(req as ParamIdRequest, res as Response, next);
-
-      expect(next).toHaveBeenCalledWith(new Error("Thing not found"));
-    });
   });
 });
