@@ -1,6 +1,6 @@
 import { type NextFunction, type Request, type Response } from "express";
+import CustomError from "../../../CustomError/CustomError.js";
 import { things } from "../../../data/data.js";
-import CustomError from "../../middlewares/CustomError/CustomError.js";
 
 export const getThings = (_req: Request, res: Response) => {
   res.status(200);

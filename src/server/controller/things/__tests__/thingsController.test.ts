@@ -21,7 +21,7 @@ describe("Given a getThings controller", () => {
       expect(res.status).toBeCalledWith(expectedStatusCode);
     });
 
-    test("Then it should call its method json", () => {
+    test("Then it should call its method json with things", () => {
       getThings(req as Request, res as Response);
 
       expect(res.json).toHaveBeenCalledTimes(1);
