@@ -12,6 +12,6 @@ const thingSchema = new Schema<ThingStructure>({
   },
 });
 
-model("Thing", thingSchema, "things");
+const Thing = model("Thing", thingSchema, "things");
 
-export default thingSchema;
+export default Thing;
