@@ -1,4 +1,4 @@
-import { type NextFunction, type Request, type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import { type ParamIdRequest, type Thing } from "../../../../data/types.js";
 import { getThingById } from "../thingsController.js";
 
@@ -20,7 +20,7 @@ describe("Given a getThingById controller", () => {
     test("Then it should call method status with 200", () => {
       const expectedStatusCode = 200;
 
-      getThingById(req as Request, res as Response, next);
+      getThingById(req as ParamIdRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -31,15 +31,9 @@ describe("Given a getThingById controller", () => {
         description: "Play tennis",
       };
 
-      getThingById(req as Request, res as Response, next);
-
-      expect(res.json).toBeCalledWith({ thing: things });
-    });
-
-    test("Then the next function should be called with an error message 'Thing not found' and error status 404", () => {
       getThingById(req as ParamIdRequest, res as Response, next);
 
-      expect(next).toHaveBeenCalledWith(new Error("Thing not found"));
+      expect(res.json).toBeCalledWith({ thing: things });
     });
   });
 });

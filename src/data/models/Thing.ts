@@ -1,7 +1,7 @@
-import { Schema, model, type ObjectId } from "mongoose";
+import { Schema, model } from "mongoose";
 
 export interface ThingStructure {
-  id: ObjectId;
+  id: string;
   description: string;
 }
 
@@ -12,6 +12,6 @@ const thingSchema = new Schema<ThingStructure>({
   },
 });
 
-model("Thing", thingSchema, "things");
+const Thing = model("Thing", thingSchema, "things");
 
-export default thingSchema;
+export default Thing;

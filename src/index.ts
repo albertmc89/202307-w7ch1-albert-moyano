@@ -17,4 +17,6 @@ try {
 } catch (error) {
   debug("Error connecting to database");
   debug((error as Error).message);
+
+  process.exit(1);
 }

@@ -1,27 +1,44 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
 import { things } from "../../../data/data.js";
+import Thing from "../../../data/models/Thing.js";
+import { type ParamIdRequest } from "../../../data/types.js";
 
-export const getThings = (_req: Request, res: Response) => {
-  res.status(200);
-  res.json({ things });
+export const getThings = async (_req: Request, res: Response) => {
+  const things = await Thing.find().exec();
+
+  res.status(200).json({ things });
 };
 
 export const getThingById = (
-  req: Request,
+  req: ParamIdRequest,
   res: Response,
   next: NextFunction
 ) => {
   const { idThing } = req.params;
 
-  const thingById = things.find((thing) => thing.id === +idThing);
+  try {
+    const thing = things.find((thing) => thing.id === +idThing);
 
-  if (!thingById) {
-    next(new CustomError("Thing not found", 404));
-    return;
+    if (!thing) {
+      const error = new CustomError("Thing not found", 404, "Thing not found");
+
+      next(error);
+      return;
+    }
+
+    res.status(200).json({ thing });
+  } catch (error: unknown) {
+    const customError = new CustomError(
+      "Can't retrieve thing",
+      404,
+      (error as Error).message
+    );
+
+    next(customError);
   }
 
-  res.status(200).json({ thing: thingById });
+  res.status(200).json({ idThing });
 };
 
 export const deleteThingById = (
@@ -36,7 +53,7 @@ export const deleteThingById = (
   );
 
   if (thingToDeletePosition === -1) {
-    next(new CustomError("Thing not found", 404));
+    next(new CustomError("Thing not found", 404, "Thing not found"));
     return;
   }
 
