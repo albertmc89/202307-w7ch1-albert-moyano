@@ -7,10 +7,19 @@ export const getThings = (_req: Request, res: Response) => {
   res.json({ things });
 };
 
-export const getThingById = (req: Request, res: Response) => {
+export const getThingById = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { idThing } = req.params;
 
   const thingById = things.find((thing) => thing.id === +idThing);
+
+  if (!thingById) {
+    next(new CustomError("Thing not found", 404));
+    return;
+  }
 
   res.status(200).json({ thing: thingById });
 };
