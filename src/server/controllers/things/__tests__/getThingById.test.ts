@@ -1,9 +1,11 @@
 import { type NextFunction, type Request, type Response } from "express";
 import mongoose from "mongoose";
 import CustomError from "../../../../CustomError/CustomError.js";
-import Thing, { type ThingStructure } from "../../../../data/models/Thing.js";
-import { type ParamIdRequest } from "../../../../data/types";
-import { getThingById } from "../thingsController.js";
+import Thing, {
+  type ThingStructure,
+} from "../../../../database/models/Thing.js";
+import { type ParamIdRequest } from "../../../../types.js";
+import { getThingById } from "../thingsControllers.js";
 
 const res: Partial<Response> = {
   status: jest.fn().mockReturnThis(),

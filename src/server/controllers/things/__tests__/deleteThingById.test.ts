@@ -1,8 +1,8 @@
 import { type NextFunction, type Request, type Response } from "express";
 import mongoose from "mongoose";
-import { type ThingStructure } from "../../../../data/models/Thing";
-import { type ParamIdRequest } from "../../../../data/types";
-import { deleteThingById } from "../thingsController";
+import { type ThingStructure } from "../../../../database/models/Thing";
+import { type ParamIdRequest } from "../../../../types";
+import { deleteThingById } from "../thingsControllers";
 
 const res: Partial<Response> = {
   status: jest.fn().mockReturnThis(),
