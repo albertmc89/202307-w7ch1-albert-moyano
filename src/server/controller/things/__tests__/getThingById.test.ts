@@ -51,7 +51,7 @@ describe("Given a getThingById controller", () => {
 
     test("Then it should call the received next function with a 404 'Thing not found' error", async () => {
       Thing.findById = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(null),
+        exec: jest.fn().mockResolvedValue(undefined),
       });
 
       const expectedError = new CustomError(

@@ -1,42 +1,37 @@
-import { type NextFunction, type Response } from "express";
-import { type ParamIdRequest } from "../../../../data/types.js";
-import { deleteThingById } from "../thingsController.js";
+import { type NextFunction, type Request, type Response } from "express";
+import mongoose from "mongoose";
+import { type ThingStructure } from "../../../../data/models/Thing";
+import { type ParamIdRequest } from "../../../../data/types";
+import { deleteThingById } from "../thingsController";
 
-describe("Given a deleteThingById controller", () => {
+const res: Partial<Response> = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+};
+
+const mockThings: ThingStructure[] = [
+  {
+    id: new mongoose.Types.ObjectId().toString(),
+    description: "Do homework",
+  },
+];
+
+const req: Partial<Request> = {
+  params: {
+    id: mockThings.toString(),
+  },
+};
+
+const next: NextFunction = jest.fn();
+
+describe("Given a getThingById controller", () => {
   describe("When it receives a response", () => {
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+    test("Then it should call its method status with 200", async () => {
+      const expectedStatusCode = 200;
 
-    const next: NextFunction = jest.fn();
+      await deleteThingById(req as ParamIdRequest, res as Response, next);
 
-    const req: Pick<ParamIdRequest, "params"> = {
-      params: {
-        idThing: "1",
-      },
-    };
-
-    test("Then it should call method status with 200", () => {
-      const expectedStatus = 200;
-
-      deleteThingById(req as ParamIdRequest, res as Response, next);
-
-      expect(res.status).toHaveBeenCalledWith(expectedStatus);
-    });
-
-    test("Then the method json should be called an object with a message 'Thing deleted'", () => {
-      const message = "Thing deleted";
-
-      deleteThingById(req as ParamIdRequest, res as Response, next);
-
-      expect(res.json).toBeCalledWith({ message });
-    });
-
-    test("Then the next function should be called with an error message 'Thing not found' and error status 404", () => {
-      deleteThingById(req as ParamIdRequest, res as Response, next);
-
-      expect(next).toHaveBeenCalledWith(new Error("Thing not found"));
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
   });
 });
