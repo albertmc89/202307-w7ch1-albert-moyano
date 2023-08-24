@@ -10,15 +10,15 @@ export const getThings = async (_req: Request, res: Response) => {
   res.status(200).json({ things });
 };
 
-export const getThingById = (
+export const getThingById = async (
   req: ParamIdRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const { idThing } = req.params;
+  const { idThing: id } = req.params;
 
   try {
-    const thing = things.find((thing) => thing.id === +idThing);
+    const thing = await Thing.findById(id).exec();
 
     if (!thing) {
       const error = new CustomError("Thing not found", 404, "Thing not found");
@@ -31,14 +31,12 @@ export const getThingById = (
   } catch (error: unknown) {
     const customError = new CustomError(
       "Can't retrieve thing",
-      404,
+      500,
       (error as Error).message
     );
 
     next(customError);
   }
-
-  res.status(200).json({ idThing });
 };
 
 export const deleteThingById = (
