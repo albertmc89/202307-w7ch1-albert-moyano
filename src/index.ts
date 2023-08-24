@@ -1,6 +1,6 @@
 import debugCreator from "debug";
 import "dotenv/config";
-import { connectToDataBase } from "./data/connectToDataBase.js";
+import { connectToDataBase } from "./database/connectToDataBase.js";
 import startServer from "./server/startServer.js";
 
 const debug = debugCreator("things-api:main");

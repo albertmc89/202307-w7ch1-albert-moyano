@@ -3,7 +3,7 @@ import {
   deleteThingById,
   getThingById,
   getThings,
-} from "../controller/things/thingsController.js";
+} from "../controllers/things/thingsControllers.js";
 
 const thingsRouter = express.Router();
 

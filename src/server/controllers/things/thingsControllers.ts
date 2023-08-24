@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
-import Thing from "../../../data/models/Thing.js";
-import { type ParamIdRequest } from "../../../data/types.js";
+import Thing from "../../../database/models/Thing.js";
+import { type ParamIdRequest } from "../../../types.js";
 
 export const getThings = async (_req: Request, res: Response) => {
   const things = await Thing.find().exec();
@@ -14,10 +14,10 @@ export const getThingById = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { idThing } = req.params;
+  const { idThing: id } = req.params;
 
   try {
-    const thing = await Thing.findById(idThing).exec();
+    const thing = await Thing.findById(id).exec();
 
     if (typeof thing === "undefined") {
       const error = new CustomError("Thing not found", 404, "Thing not found");
@@ -43,12 +43,12 @@ export const deleteThingById = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { idThing } = req.params;
+  const { idThing: id } = req.params;
 
   try {
-    const thing = await Thing.findByIdAndDelete(idThing).exec();
+    const thing = await Thing.findByIdAndDelete(id).exec();
 
-    if (typeof thing === "undefined") {
+    if (!thing) {
       next(new CustomError("Thing not found", 404, "Thing not found"));
       return;
     }
