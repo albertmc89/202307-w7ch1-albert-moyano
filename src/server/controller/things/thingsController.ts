@@ -1,6 +1,5 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
-import { things } from "../../../data/data.js";
 import Thing from "../../../data/models/Thing.js";
 import { type ParamIdRequest } from "../../../data/types.js";
 
@@ -15,12 +14,12 @@ export const getThingById = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { idThing: id } = req.params;
+  const { idThing } = req.params;
 
   try {
-    const thing = await Thing.findById(id).exec();
+    const thing = await Thing.findById(idThing).exec();
 
-    if (!thing) {
+    if (typeof thing === "undefined") {
       const error = new CustomError("Thing not found", 404, "Thing not found");
 
       next(error);
@@ -39,23 +38,29 @@ export const getThingById = async (
   }
 };
 
-export const deleteThingById = (
+export const deleteThingById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { idThing } = req.params;
 
-  const thingToDeletePosition = things.findIndex(
-    (thing) => thing.id === Number(idThing)
-  );
+  try {
+    const thing = await Thing.findByIdAndDelete(idThing).exec();
 
-  if (thingToDeletePosition === -1) {
-    next(new CustomError("Thing not found", 404, "Thing not found"));
-    return;
+    if (typeof thing === "undefined") {
+      next(new CustomError("Thing not found", 404, "Thing not found"));
+      return;
+    }
+  } catch (error: unknown) {
+    const customError = new CustomError(
+      "Can't delete thing",
+      500,
+      (error as Error).message
+    );
+
+    next(customError);
   }
-
-  things.splice(thingToDeletePosition, 1);
 
   res.status(200).json({ message: "Thing deleted" });
 };
