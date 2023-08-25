@@ -36,6 +36,7 @@ describe("Given a GET '/things' endpoint", () => {
   beforeEach(async () => {
     await Thing.create(mockThings);
   });
+
   describe("When it receives a request", () => {
     test("Then it should respond with status 200 and things 'Explain stoppers' and 'Assist to physiotherapy'", async () => {
       const expectedStatusCode = 200;

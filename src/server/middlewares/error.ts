@@ -6,7 +6,7 @@ export const endPointNotFound = (
   res: Response,
   next: NextFunction
 ) => {
-  next(new CustomError("Endpoint", 404, "Endpoint"));
+  next(new CustomError("Endpoint not found", 404, "Endpoint not found"));
 };
 
 export const generalErrorHandler = (

@@ -19,7 +19,7 @@ export const getThingById = async (
   try {
     const thing = await Thing.findById(id).exec();
 
-    if (typeof thing === "undefined") {
+    if (!thing) {
       const error = new CustomError("Thing not found", 404, "Thing not found");
 
       next(error);
@@ -52,6 +52,8 @@ export const deleteThingById = async (
       next(new CustomError("Thing not found", 404, "Thing not found"));
       return;
     }
+
+    res.status(200).json({ message: "Thing deleted" });
   } catch (error: unknown) {
     const customError = new CustomError(
       "Can't delete thing",
@@ -61,6 +63,4 @@ export const deleteThingById = async (
 
     next(customError);
   }
-
-  res.status(200).json({ message: "Thing deleted" });
 };
