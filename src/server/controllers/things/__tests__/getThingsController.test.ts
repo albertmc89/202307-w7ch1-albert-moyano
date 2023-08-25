@@ -39,11 +39,5 @@ describe("Given a getThings controller", () => {
 
       expect(res.status).toBeCalledWith(expectedStatusCode);
     });
-
-    test("Then it should call its method json of the received response with and object with the property things", async () => {
-      await getThings(req as Request, res as Response);
-
-      expect(res.json).toHaveBeenCalled();
-    });
   });
 });

@@ -27,6 +27,10 @@ const req: Partial<Request> = {
 
 const next: NextFunction = jest.fn();
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 Thing.findById = jest.fn().mockReturnValue({
   exec: jest.fn().mockResolvedValue(mockThings),
 });
